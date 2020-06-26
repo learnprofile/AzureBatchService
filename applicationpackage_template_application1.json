@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "batchAccountName": {
+      "type": "string",
+      "defaultValue": "prademobatchservice",
+      "metadata": {
+        "description": "Batch Account Name"
+      }
+    },
+	
+	 "batchAccountPoolName": {
+      "type": "string",
+      "defaultValue": "applicationpool1",
+      "metadata": {
+        "description": "Batch Account Name"
+      }
+    }
+	
+	
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[concat(parameters('batchAccountName'),'/', parameters('batchAccountPoolName'))]",
+            "type": "Microsoft.Batch/batchAccounts/pools",
+            "apiVersion": "2017-09-01",
+            "properties": {
+			  "displayName": "applicationpool1",
+
+        "provisioningState": "Succeeded",
+        
+        "allocationState": "Steady",
+        
+        "vmSize": "STANDARD_D2_V3",
+        "interNodeCommunication": "Disabled",
+        "maxTasksPerNode": 1,
+        "taskSchedulingPolicy": {
+          "nodeFillType": "Spread"
+        },
+        "deploymentConfiguration": {
+          "virtualMachineConfiguration": {
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "2016-Datacenter",
+              "version": "latest"
+            },
+            "nodeAgentSkuId": "batch.node.windows amd64"
+          }
+        },
+        "scaleSettings": {
+          "fixedScale": {
+            "targetDedicatedNodes": 1,
+            "targetLowPriorityNodes": 2,
+            "resizeTimeout": "PT15M"
+          }
+        },
+        "applicationPackages": [
+          {
+           
+           
+            "id": "[concat(resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccountName')), '/applications/prademotestapplication')]",
+            "version": "2.4"
+		  
+          }
+        ]
+            }
+          }
+    ],
+    "outputs": {}
+}

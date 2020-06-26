@@ -1,0 +1,441 @@
+{
+    "parameters": {
+        "jobId1": {
+            "type": "string",
+            "defaultValue": "application_SCHEDULE_CALCULATE",
+            "metadata": {
+                "description": "The id of Azure Batch job for schedule calculate"
+            }
+        },
+		
+	
+		
+		
+		    "jobId2": {
+            "type": "string",
+            "defaultValue": "application_SCHEDULE_PUBLISH",
+            "metadata": {
+                "description": "The id of Azure Batch job for schedule publish"
+            }
+        },
+		
+	
+		
+		    "jobId3": {
+            "type": "string",
+            "defaultValue": "application_SCHEDULE_PUBLISHPENDING1",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending1"
+            }
+            },
+		
+		
+	   			
+		
+		    "jobId4": {
+            "type": "string",
+            "defaultValue": "application_SCHEDULE_PUBLISHPENDING2",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending2"
+            }
+            },
+			
+			
+			
+			
+		
+		
+		    "jobId5": {
+            "type": "string",
+            "defaultValue": "application_SCHEDULE_PUBLISHPENDING3",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending3"
+            }
+           },
+		   
+		   
+		   	    "jobId6": {
+            "type": "string",
+            "defaultValue": "application2_SCHEDULE_CALCULATE",
+            "metadata": {
+                "description": "The id of Azure Batch job for schedule calculate"
+            }
+            },
+			
+			
+		
+			"jobId7": {
+            "type": "string",
+            "defaultValue": "application2_SCHEDULE_PUBLISH",
+            "metadata": {
+                "description": "The id of Azure Batch job for schedule publish"
+            }
+            },
+		
+		
+		
+		
+		 	"jobId8": {
+            "type": "string",
+            "defaultValue": "application2_SCHEDULE_PUBLISHPENDING1",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending1"
+            }
+            },
+			
+		
+	    	"jobId9": {
+            "type": "string",
+            "defaultValue": "application2_SCHEDULE_PUBLISHPENDING2",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending2"
+            }
+            },
+			
+		
+		    "jobId10": {
+            "type": "string",
+            "defaultValue": "application2_SCHEDULE_PUBLISHPENDING3",
+            "metadata": {
+                "description": "The id of Azure Batch jobschedule publish pending3"
+            }
+        },
+		
+		
+		
+        "poolId": {
+            "type": "string",
+            "defaultValue": "applicationpool1",
+            "metadata": {
+                "description": "The id of Azure Batch pool which runs the job"
+            }
+        },
+        "taskStart": {
+            "type": "int",
+             "defaultValue": "1",
+            "metadata": {
+                "description": "The sweep start parameter"
+            }
+        },
+        "taskEnd": {
+            "type": "int",
+             "defaultValue": "500",
+            "metadata": {
+                "description": "The sweep end parameter"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId1')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+	 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId2')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+		 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId3')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+		 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId4')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+	
+	
+		 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId5')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+			 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId6')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+			 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId7')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+			 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId8')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+				 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId9')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    },
+	
+				 "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "apiVersion": "2018-12-01",
+        "properties": {
+            "id": "[parameters('jobId10')]",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "parametricSweep",
+                "parameterSets": [
+                    {
+                        "start": "[parameters('taskStart')]",
+                        "end": "[parameters('taskEnd')]",
+                        "step": 1
+                    }
+                ],
+                "repeatTask": {
+                    "commandLine": "/bin/bash -c 'echo Hello world from task {0}'",
+                    "constraints": {
+                        "retentionTime":"PT1H"
+                    }
+                }
+            }
+        }
+    }
+	
+	
+}

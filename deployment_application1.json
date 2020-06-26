@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "templateContainerUri": {
+           "type": "string",
+           "metadata": {
+                "description": "URI of the Blob Storage Container containing the Azure Resouce Manager templates"
+            }
+        },
+        "templateContainerSasToken": {
+           "type": "string",
+           "metadata": {
+                "description": "The SAS token of the container containing the Azure Resouce Manager templates"
+            }
+        },
+        "applicationStorageAccountName": {
+            "type": "string",
+            "metadata": {
+                 "description": "Name of the Azure Storage Account"
+            }
+         },
+        "batchAccountName": {
+            "type": "string",
+            "metadata": {
+                 "description": "Name of the Azure Batch Account"
+            }
+         },
+         "batchAccountPoolName": {
+             "type": "string",
+             "metadata": {
+                  "description": "Name of the Azure Batch Account Pool"
+              }
+          }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "storageAccountDeployment",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                  "uri": "[concat(parameters('templateContainerUri'), 'sql/storageaccount.json', parameters('templateContainerSasToken'))]",
+                  "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "accountName": {"value": "[parameters('applicationStorageAccountName')]"}
+                }
+            }
+        },
+
+ {
+            "apiVersion": "2017-05-10",
+            "name": "batchAccountDeployment",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "storageAccountDeployment"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                  "uri": "[concat(parameters('templateContainerUri'), 'sql/batchaccount.json', parameters('templateContainerSasToken'))]",
+                  "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "batchAccountName": {"value": "[parameters('batchAccountName')]"},
+                    "storageAccountId": {"value": "[reference('storageAccountDeployment').outputs.resourceId.value]"}
+                }
+            }
+        }
+       
+              
+  
+    ],
+    "outputs": {}
+}
